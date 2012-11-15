@@ -8,6 +8,7 @@ using System.Web.Routing;
 using AutoMapper;
 using MVCF1.API;
 using MVCF1.Models;
+using Driver = MVCF1.API.Driver;
 
 namespace MVCF1
 {
@@ -23,7 +24,15 @@ namespace MVCF1
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            Mapper.CreateMap<RootObject, DriverResults>();
+            Mapper.CreateMap<MVCF1.API.Driver, MVCF1.Models.Driver>()
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.givenName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.familyName));
+
+            Mapper.CreateMap<MVCF1.API.DriverStanding, MVCF1.Models.DriverResults>();
+
+            Mapper.CreateMap<MVCF1.API.RootObject, MVCF1.Models.DriverResults>();
         }
     }
+
+   
 }
