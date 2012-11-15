@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using MVCF1.API;
 using MVCF1.Models;
 using RestSharp;
 
@@ -20,13 +22,16 @@ namespace MVCF1.Controllers
 
             var response = client.Execute<RootObject>(request);
 
-            RootObject model = null;
+            DriverResults model = null;
 
             if (!string.IsNullOrWhiteSpace(response.ErrorMessage) || response.Data == null)
-                model = new RootObject();
+            {
+                model = new DriverResults();
+            }
             else
-                model = response.Data;
-
+            {
+                model = Mapper.Map<RootObject, DriverResults>(response.Data);
+            }
 
 
             return View(model);

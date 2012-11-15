@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using AutoMapper;
+using MVCF1.API;
+using MVCF1.Models;
 
 namespace MVCF1
 {
@@ -19,6 +22,8 @@ namespace MVCF1
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            Mapper.CreateMap<RootObject, DriverResults>();
         }
     }
 }
