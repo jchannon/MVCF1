@@ -73,19 +73,18 @@ namespace MVCF1.Tests
                                               {
                                                   StandingsTable =
                                                       new StandingsTable
-                                                          {season = "2012", StandingsLists = new List<StandingsList>()}
+                                                          {StandingsLists = new List<StandingsList>()}
                                               }
                                   };
             
 
             StandingsList standingsList = new StandingsList {DriverStandings = new List<DriverStanding>()};
+            standingsList.season = "2012";
             root.MRData.StandingsTable.StandingsLists.Add(standingsList);
             
             DriverStanding driverStanding = new DriverStanding
                                                 {
                                                     points = "1",
-                                                    position = "1",
-                                                    wins = "1",
                                                     Driver = new Driver {familyName = "Button", givenName = "Jenson"}
                                                 };
 
