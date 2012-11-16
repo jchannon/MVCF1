@@ -24,15 +24,37 @@ namespace MVCF1
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            Mapper.CreateMap<MVCF1.API.Driver, MVCF1.Models.Driver>()
-                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.givenName))
-                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.familyName));
+            Mapper.CreateMap<API.Driver, Models.Driver>()
+        .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.givenName))
+        .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.familyName));
 
-            Mapper.CreateMap<MVCF1.API.DriverStanding, MVCF1.Models.DriverResults>();
+            Mapper.CreateMap<API.DriverStanding, Models.DriverResults>()
+                .ForMember(dest => dest.Driver, opt => opt.MapFrom(src => new List<Models.Driver> { Mapper.Map<API.Driver, Models.Driver>(src.Driver) }))
+                .ForMember(dest => dest.Points, opt => opt.MapFrom(src => src.points))
+                .ForMember(dest => dest.Season, opt => opt.Ignore());
 
-            Mapper.CreateMap<MVCF1.API.RootObject, MVCF1.Models.DriverResults>();
+            Mapper.CreateMap<API.StandingsList, Models.DriverResults>()
+                .ForMember(dest => dest.Season, opt => opt.MapFrom(src => src.season))
+                .ForMember(dest => dest.Driver, opt => opt.Ignore())
+                .ForMember(dest => dest.Points, opt => opt.Ignore());
+
+            Mapper.CreateMap<API.StandingsTable, Models.DriverResults>()
+                .ForMember(dest => dest.Season, opt => opt.Ignore())
+                .ForMember(dest => dest.Driver, opt => opt.Ignore())
+                .ForMember(dest => dest.Points, opt => opt.Ignore());
+
+            Mapper.CreateMap<API.MRData, Models.DriverResults>()
+                .ForMember(dest => dest.Season, opt => opt.Ignore())
+                .ForMember(dest => dest.Driver, opt => opt.Ignore())
+                .ForMember(dest => dest.Points, opt => opt.Ignore());
+
+
+            Mapper.CreateMap<API.RootObject, Models.DriverResults>()
+                .ForMember(dest => dest.Season, opt => opt.Ignore())
+                .ForMember(dest => dest.Driver, opt => opt.Ignore())
+                .ForMember(dest => dest.Points, opt => opt.Ignore());
         }
     }
 
-   
+
 }
